@@ -11,6 +11,7 @@ describe('Car model', () => {
 
   beforeEach(async () => {
 		sinon.stub(Model, 'create').resolves(carMockWithId);
+    sinon.stub(Model, 'find').resolves([]);
 
   });
 
