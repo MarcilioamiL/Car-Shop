@@ -6,7 +6,7 @@ const { expect } = chai;
 import CarModel from '../../../models/carModel';
 import CarService from '../../../services/CarService';
 import CarController from '../../../controllers/CarController';
-import { carMock, carMockWithId, invalid } from '../mocks/carMocks';
+import { carMock, carMockWithId, invalid, carMockWithIdAndArry } from '../mocks/carMocks';
 import { ErrorTypes } from '../../../utils/Erros';
 
 describe('Car Controller test', () => {
@@ -19,6 +19,7 @@ describe('Car Controller test', () => {
 
   beforeEach(() => {
     sinon.stub(carService, 'create').resolves(carMock);
+    sinon.stub(carService, 'read').resolves(carMockWithIdAndArry);
 
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns(res);
@@ -35,6 +36,16 @@ describe('Car Controller test', () => {
 
       expect((res.status as sinon.SinonStub).calledWith(201)).to.be.true;
       expect((res.json as sinon.SinonStub).calledWith(carMock)).to.be.true;
+    });
+  });
+
+  describe('Read car success', () => {
+    it('Success', async () => {
+      req.body = carMockWithIdAndArry;
+      await carController.read(req, res);
+
+      expect((res.status as sinon.SinonStub).calledWith(200)).to.be.equal(true);
+      expect((res.json as sinon.SinonStub).calledWith(carMockWithIdAndArry)).to.be.equal(true);
     });
   });
 });

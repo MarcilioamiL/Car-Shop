@@ -4,7 +4,7 @@ import { ZodError } from 'zod';
 const { expect } = chai;
 import CarModel from '../../../models/carModel';
 import CarService from '../../../services/CarService';
-import { carMock, carMockWithId, invalid } from '../mocks/carMocks'
+import { carMock, carMockWithId, invalid, carMockWithIdAndArry } from '../mocks/carMocks'
 import { ErrorTypes } from '../../../utils/Erros';
 
 describe('Car service test', () => {
@@ -13,6 +13,7 @@ describe('Car service test', () => {
 
 	beforeEach(() => {
 		sinon.stub(carModel, 'create').resolves(carMockWithId);
+		sinon.stub(carModel, 'read').resolves(carMockWithIdAndArry);
 	});
 
 	afterEach(() => {
@@ -33,4 +34,11 @@ describe('Car service test', () => {
 			}
 		});
 	});
+
+	describe('test read', () => {
+		it('return array car', async() => {
+			const arrayCar = await carService.read();
+			expect(arrayCar).to.be.an('array');
+		  });
+	})
 });

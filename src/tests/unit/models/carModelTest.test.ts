@@ -2,7 +2,7 @@ import * as sinon from 'sinon';
 import chai from 'chai';
 const { expect } = chai;
 import CarModel from '../../../models/carModel';
-import { carMock, carMockWithId, invalid } from '../mocks/carMocks'
+import { carMock, carMockWithId, invalid, carMockWithIdAndArry } from '../mocks/carMocks'
 import { Model } from 'mongoose';
 import { ErrorTypes } from '../../../utils/Erros';
 
@@ -11,7 +11,7 @@ describe('Car model', () => {
 
   beforeEach(async () => {
 		sinon.stub(Model, 'create').resolves(carMockWithId);
-    sinon.stub(Model, 'find').resolves([]);
+    sinon.stub(Model, 'find').resolves(carMockWithIdAndArry);
 
   });
 
@@ -29,7 +29,7 @@ describe('Car model', () => {
   describe('Find a Car', () => {
     it('successfully found', async () => {
       const carFound = await carModel.read();
-      return expect(carFound).to.be.deep.equal([]);
+      return expect(carFound).to.be.deep.equal(carMockWithIdAndArry);
     });
 	});
 });
