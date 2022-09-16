@@ -11,5 +11,7 @@ const carController = new CarController(carService);
 
 route.post('/cars', (req: Request, res: Response) => 
   carController.create(req, res));
+route.get('/cars', async (req: Request, res: Response) => 
+  carController.read(req, res));
 
 export default route;
