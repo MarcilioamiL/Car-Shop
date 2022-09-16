@@ -21,4 +21,9 @@ export default class CarController {
     const getCars = await this._service.read();
     res.status(200).json(getCars);
   }
+
+  async readOne(req: Request, res: Response<ICar>) {
+    const oneCarResult = await this._service.readOne(req.params.id);
+    return res.status(200).json(oneCarResult as ICar);
+  }
 }
