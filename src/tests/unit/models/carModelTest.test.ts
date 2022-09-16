@@ -25,4 +25,11 @@ describe('Car model', () => {
 			expect(newCar).to.be.deep.equal(carMockWithId);
 		});
 	});
+
+  describe('Find a Car', () => {
+    it('successfully found', async () => {
+      const carFound = await carModel.read();
+      return expect(carFound).to.be.deep.equal([]);
+    });
+	});
 });
