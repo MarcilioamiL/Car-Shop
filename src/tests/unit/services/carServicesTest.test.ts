@@ -14,6 +14,9 @@ describe('Car service test', () => {
 	beforeEach(() => {
 		sinon.stub(carModel, 'create').resolves(carMockWithId);
 		sinon.stub(carModel, 'read').resolves(carMockWithIdAndArry);
+		sinon.stub(carModel, 'readOne').resolves(carMockWithId);
+		sinon.stub(carModel, 'update').resolves(carMockWithId);
+		sinon.stub(carModel, 'delete').resolves(carMockWithId);
 	});
 
 	afterEach(() => {
@@ -41,4 +44,55 @@ describe('Car service test', () => {
 			expect(arrayCar).to.be.an('array');
 		  });
 	})
+
+	describe('test ReadOne', () => {
+		it('Success', async () => {
+			const carById = await carService.readOne(carMockWithId._id);
+
+			expect(carById).to.be.an('object');
+		});
+
+		it('return undefined', async () => {
+			try {
+				await carService.readOne(invalid);
+			} catch (error: any) {
+				expect(error.message).to.be.equal(undefined);
+			}
+		});
+	});
+
+	describe('test Update', () => {
+		it('return car object', async () => {
+			const carUpdated = await carService.update(carMockWithId._id, carMock);
+			expect(carUpdated).to.be.an('object');
+		});
+
+    	it('return error', async () => {
+			try {
+				await carService.update(carMockWithId._id, carMock);
+			} catch (error: any) {
+				expect(error.message).to.be.deep.equal(['error']);
+			}
+		});
+	});
+
+	describe('test delete', () => {
+		it('return car object', async () => {
+			const carUpdated = await carService.delete(carMockWithId._id);
+			expect(carUpdated).to.be.an('object');
+		});
+
+		it('successfully key', async () => {
+			const car = await carModel.delete(carMockWithId._id);
+			expect(car).to.have.keys(carMockWithId);
+		});
+
+    	it('return undefined', async () => {
+			try {
+				await carService.delete(invalid);
+			} catch (error: any) {
+				expect(error.message).to.be.equal(undefined);
+			}
+		});
+	});
 });
