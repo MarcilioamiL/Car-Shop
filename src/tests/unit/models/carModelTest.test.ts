@@ -10,7 +10,7 @@ describe('Car model', () => {
   const carModel = new CarModel();
 
   beforeEach(async () => {
-		sinon.stub(Model, 'create').resolves(carMockWithId);
+	sinon.stub(Model, 'create').resolves(carMockWithId);
     sinon.stub(Model, 'find').resolves(carMockWithIdAndArry);
     sinon.stub(Model, 'findOne').resolves(carMockWithId);
     sinon.stub(Model, 'findOneAndUpdate').resolves(carMockWithId);
